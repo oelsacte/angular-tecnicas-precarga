@@ -13,7 +13,6 @@ export class PreloadService implements PreloadingStrategy {
     } else {
       return of();
     }
-
   }
 
   constructor() { }

@@ -1,14 +1,24 @@
 # AngularTecnicasPrecarga
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.10.
+## Paso 1
 
-## Development server
+Se agregó el atributo data a algunos Routes en el app-routing-modules con el atributo preload en true:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+`data: { preload: true }` 
 
-## Code scaffolding
+para los módulos que queremos que se precargar. El resto serán cargados hasta que sean invocados.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Paso 2
+
+Se crea un servicio que implemente la interfaz PreloadingStrategy de '@angular/router'. Se sobreescribe el método de la interfaz del siguiente modo para que pueda leer el atributo preload.
+
+`preload(route: Route, fn: () => Observable<any>): Observable<any> {
+    if (route.data && route.data[\"preload\"]) {
+      return fn();
+    } else {
+      return of();
+    }
+ }`
 
 ## Build
 
