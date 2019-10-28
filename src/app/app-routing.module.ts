@@ -28,7 +28,8 @@ const routes: Routes = [
       },
       {
         path: 'contact',
-        loadChildren: () => import('./contact/contact.module').then(m => m.ContactModule)
+        loadChildren: () => import('./contact/contact.module').then(m => m.ContactModule),
+        data: { preload: true}
       },
       {
         path: 'order',
