@@ -1,21 +1,26 @@
-# Precarga personalizada
+# Precarga Quicklink
 
 ## Paso 1
 
-Se agregó el atributo data a algunos Routes en el app-routing-modules con el atributo preload en true:
-
-`data: { preload: true }` 
-
-para los módulos que queremos que se precargar. El resto serán cargados hasta que sean invocados.
+Se instala `npm i ngx-quicklink --save`
 
 ## Paso 2
 
-Se crea un servicio que implemente la interfaz PreloadingStrategy de '@angular/router'. Se sobreescribe el método de la interfaz del siguiente modo para que pueda leer el atributo preload.
+Luego se importa el `QuicklinkModule` al `AppModule` y se usa el `QuicklinkStrategy` como `preloadingStrategy` en la configuración del `app-routing.module`.
 
-`preload(route: Route, fn: () => Observable<any>): Observable<any> {
-    if (route.data && route.data["preload"]) {
-      return fn();
-    } else {
-      return of();
-    }
- }`
+```ts
+import { QuicklinkModule, QuicklinkStrategy } from 'ngx-quicklink';
+
+@NgModule({
+  declarations: [...],
+  imports: [
+    // ...
+    QuicklinkModule,
+    RouterModule.forRoot(routes, { preloadingStrategy: QuicklinkStrategy }),
+  ],
+  bootstrap: [...]
+})
+export class AppModule {}
+```
+
+Lo que hace esta técnica es precargar solamente los módulos de los routerLink que estén en el viewport o, dicho de otro modo, en la zona visible del scroll de la página.
