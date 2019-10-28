@@ -12,10 +12,12 @@ para los módulos que queremos que se precargar. El resto serán cargados hasta 
 
 Se crea un servicio que implemente la interfaz PreloadingStrategy de '@angular/router'. Se sobreescribe el método de la interfaz del siguiente modo para que pueda leer el atributo preload.
 
-`preload(route: Route, fn: () => Observable<any>): Observable<any> {
+```ts
+preload(route: Route, fn: () => Observable<any>): Observable<any> {
     if (route.data && route.data["preload"]) {
       return fn();
     } else {
       return of();
     }
- }`
+ }
+ ```
